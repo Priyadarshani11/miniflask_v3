@@ -13,7 +13,6 @@ api = Api(app)
 my_resource1 = []
 my_resource2 = []
 
-
 class Resource1(Resource):
     def get(self):
         return my_resource1
