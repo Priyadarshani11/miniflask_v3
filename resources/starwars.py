@@ -10,7 +10,7 @@ import json
 from flask import Blueprint, request, Response
 from dal.dml import fetch_resource, insert_resource, __delete_resource, upsert_films
 from models.datamodels.characters import Character_
-from models.datamodels.films import Film_
+from models.datamodels.films import film
 from pydantic import parse_obj_as, error_wrappers
 from pydantic.error_wrappers import ValidationError
 
@@ -46,12 +46,13 @@ class PatchFilm_(BaseModel):
     opening_crawl: Optional[str]
     director: Optional[str]
     producer: Optional[str]
+
     release_date: Union[str, datetime]
     created: Union[str, datetime]
     edited: Union[str, datetime]
     url: Optional[str]
 
-
+#
 # Blueprit class instantiation
 starwar_app = Blueprint("starwars", __name__, url_prefix="/starwars")
 
@@ -101,7 +102,7 @@ def post_films():
     request_data = request.json
     # request body validation
     try:
-        film_data = Film_(**request_data)
+        film_data = film(**request_data)
     except error_wrappers.ValidationError as ex:
         response_obj = {
             "message": f"{ex}"
@@ -221,7 +222,7 @@ def put_films():
 
     # request validation
     try:
-        film_data = Film_(**request_data)
+        film_data = film(**request_data)
     except ValidationError as ex:
         return Response(
             json.dumps({"message": "bad request"}),
@@ -257,7 +258,8 @@ def patch_films():
       "film_id": 4,
       "title": "A New Hope - RANDOM",
       "episode_id": 4,
-      "opening_crawl": "random",
+      "opening_cr
+        awl": "random",
       "director": "George Lucas",
       "producer": "Gary Kurtz, Rick McCallum",
       "release_date": "1977-05-25",

@@ -1,16 +1,23 @@
-# This is a sample Python script.
+from flask import Flask
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from resources.starwars import starwar_app
+from tasks.api import tasks_app
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+app = Flask(__name__)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+# register all the sub-applications here
+app.register_blueprint(starwar_app)   # /starwars
+app.register_blueprint(tasks_app)     # /tasks
+
+
+# TODO
+"""
+1. convert swapi project task1, task2, task3 into Blueprints
+2. register all blueprints with main application
+3. endpoints will be like following
+    - 127.0.0.1:8000/v1/taskone
+    - 127.0.0.1:8000/v2/tasktwo
+    - 127.0.0.1:8000/v3/taskthree
+"""
